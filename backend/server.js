@@ -20,7 +20,7 @@ routes.use(cors());
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://robin:241190@marketplaceproject.9dy5z.mongodb.net/marketplace?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
+const DATABASE = 'marketplace';
 // Connect to server
 app.listen(PORT, () => {
   console.log(`Server up and running on http://localhost:${PORT}`);
@@ -31,19 +31,25 @@ routes.get("/", (req, res) => {
   res.send("Hello World Root!");
 });
 
-routes.get("/products", (req, res) => {
-    res.send("Liste de produits");
-  });
-
-
 // Connect to DB  
 client.connect(err => {
   if(err) {
     throw Error(err);
   }
-  const collection = client.db("marketplace").collection("products")
-  console.log(`Successfully connected to database`);
-  
+  !err && console.log(`Successfully connected to database`);
+  const products = client.db(DATABASE).collection("products");
+
   // perform actions on the collection object
-  client.close();
+  routes.get("/products", (req, res) => {
+    products
+    .find()
+    .toArray()
+    .then((error, results) => {
+      if (error) { return res.send(error)}
+      res.statut(200).send({ results});
+    })
+    .catch((err) => res.send(err));
+  });
+
+  // client.close();
 });
