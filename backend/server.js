@@ -5,6 +5,7 @@ const cors = require("cors");
 const app = express();
 const routes = express.Router()
  app.use("/api", routes);
+ 
 
 // body-parser
 routes.use(bodyParser.urlencoded({ extended: false }));
