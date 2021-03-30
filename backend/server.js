@@ -48,7 +48,18 @@ client.connect(err => {
       if (error) { return res.send(error)}
       res.statut(200).send({ results});
     })
-    .catch((err) => res.send(err));
+    .catch((err) => res.send(err)); 
+  });
+
+  routes.post("/products/add", function (req, res) {
+    products.insertOne()
+    .then((error, result) => {
+      if(error) {
+        return res.send(error);
+      }
+        return res.status(200).send("successfully inserted new document");
+      })
+      .catch((err) => res.send(err));
   });
 
   // client.close();
