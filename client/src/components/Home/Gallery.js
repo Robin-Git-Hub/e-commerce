@@ -11,7 +11,7 @@ const Loading = ({ isLoading }) => isLoading && <p style={{marginLeft: 18, fontS
 
 const Gallery = () => { 
 	// fetch products
-const dispacth = useDispacth();
+const dispacth = useDispatch();
 
 	useEffect(() => {
 		dispacth(fetchProducts())
