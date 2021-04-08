@@ -85,9 +85,8 @@ export function setPage(index) {
 export const fetchProducts = () => {
     return async function (dispatch) {
       dispatch(getProductsPending);
-      getProducts()
-      .then(data => returnProductsArrays(data))
-      .then((productsData) => dispatch(getProductsSuccess(productsData)))
+      getProducts().then((response) => returnProductsArrays(response.data))
+      .then((data) => dispatch(getProductsSuccess(data)))
       .catch(err => dispatch (getProductsFailure(err)));
     };    
 };
