@@ -86,7 +86,8 @@ export const fetchProducts = () => {
     return async function (dispatch) {
       dispatch(getProductsPending);
       getProducts()
-      .then((data) => dispatch(getProductsSuccess(data)))
+      .then(data => returnProductsArrays(data))
+      .then((productsData) => dispatch(getProductsSuccess(productsData)))
       .catch(err => dispatch (getProductsFailure(err)));
     };    
 };

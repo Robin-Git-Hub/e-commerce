@@ -1,4 +1,4 @@
-import React from 'react'
+ import React from 'react'
 
 const Product = ({ id, name, price, category }) => {
     return (
@@ -15,7 +15,7 @@ const Product = ({ id, name, price, category }) => {
                     </li>
                 </ul>
                 <div>
-                    <a href="#" className="text-muted">{ category}</a>
+                    <a href="#" className="text-muted">{ category }</a>
                     <a href="#" className="title">{ name }</a>
                 </div>
                 <div className="price h5 mt-2">${ price }</div>
