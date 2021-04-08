@@ -1,8 +1,12 @@
  import React from 'react'
-
+ import{useDispatch} from "react-redux"
+ import {addToCart} from "../../lib/state/actions"
 const Product = ({ id, name, price, category }) => {
+const dispatch = useDispatch()
+const addToCartAction = () => dispatch(addToCart(({id, name, price}))) 
+
     return (
-    <div className="col-xl-3 col-lg-3 col-md-4 col-6">
+    <div className="col-sm-4 col-6">
         <div className="card card-product-grid">
             <a href="#" className="img-wrap"> <img src={ `images/items/${id}.jpg`} /> </a>
             <figcaption className="info-wrap">
@@ -25,7 +29,7 @@ const Product = ({ id, name, price, category }) => {
                         </label>
 
                         <label className="btn btn-success">
-                            <input onClick={() => null} type="radio" name="options" id="option3" /><i className="fas fa-shopping-cart"></i>
+                            <input onClick={addToCartAction} type="radio" name="options" id="option3" /><i className="fas fa-shopping-cart"></i>
                         </label>
                     </div>        
             </figcaption>
