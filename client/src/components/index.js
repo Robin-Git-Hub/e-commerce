@@ -1,5 +1,5 @@
 import React from 'react';  
-import {Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import Home from './Home'
 import About from './Misc/About'
@@ -28,7 +28,7 @@ const App = () => {
         <Route path="/checkout" component={Checkout} />
         <Route path="/success" component={Success} />
         <Route path="/cancel" component={Cancel} />
-       </Layout>
+      </Layout>
   );
 }
 export default App;

@@ -1,6 +1,9 @@
-import React from 'react';  
+import React from 'react';
+import {removeFromCart} from "../../lib/state/actions" 
+
 
 const Row = ({ id, name, price, quantity}) => { 
+    const removeFromCartAction = () => {};
     return (
         <tr>
             <td>
