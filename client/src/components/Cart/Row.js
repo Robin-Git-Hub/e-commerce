@@ -1,10 +1,17 @@
 import React from 'react';
-import { useSelector} from "react-redux"
-import { removeFromCart } from "../../lib/state/actions" 
+import { useDispatch} from "react-redux"
+import { removeFromCart,updateCart } from "../../lib/state/actions" 
 
 
 const Row = ({ id, name, price, quantity}) => { 
-    const removeFromCartAction = () => {};
+    const dispatch = useDispatch();
+    const updateCartAction = (e) => dispatch(updateCart(id, e.target.value));
+
+    const removeFromCartAction = (e) => {
+        e.preventDefault();
+        dispatch (removeFromCart(id));
+    }
+
     return (
         <tr>
             <td>
@@ -16,7 +23,7 @@ const Row = ({ id, name, price, quantity}) => {
                 </figure>
             </td>
             <td> 
-                <select className="form-control" value={quantity} onChange={() => null}>
+                <select className="form-control" value={quantity} onChange={updateCartAction}>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>

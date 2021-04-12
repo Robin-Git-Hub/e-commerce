@@ -10,7 +10,6 @@ import {
   SET_DELIVERY_CHOICE
 } from './actionTypes'
 import {getProducts} from '../../service'
-import { data } from '../../../data/products'
 
 
  const returnProductsArrays = (items) => { 
