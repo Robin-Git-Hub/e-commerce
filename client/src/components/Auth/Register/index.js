@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import * as Input from '../Input'
-import { use, useFormValidation } from "../../../lib/hooks/useFormValidation"
+import {useFormValidation } from "../../../lib/hooks/useFormValidation"
 
 const Alert = ({ isVisible }) => (
 	isVisible &&
@@ -20,20 +20,26 @@ const defaultValues = {
 	first: 'Robin' ,
 	last: 'Crochet' ,
 	email: 'crochetrobin@gmail.com' ,
-	gender: 'Homme' ,
-	city: 'ville' ,
+	gender: 'Male' ,
+	city: 'Velaux' ,
 	password: '12345' ,
 	confirm_password: '12345' 
 }
 const options = ['France', 'Russie', 'United Kingdom', 'United States', 'Allemagne']
-const Register = () => { 
-const {formValues, validate, register, handleOnChange} = useFormValidation({formName:'register', defaultValues: defaultValues});
-const {first,last, email, city, country, gender, password, confirm_password} = formValues['register'] ?? {}
+const Register = ({history}) => { 
+const {formValues, validate, register, handleOnChange, isValid} = useFormValidation({formName:'register'});
+const {first,last, email, city, country, gender, password, confirm_password} = formValues['register'] ?? {};
 
 
 useEffect (() => { register(defaultValues);
 },[]);
+useEffect (() => { validate(formValues['register'] ?? {});
+},[formValues]);
 
+const handleOnSubmit =(e) => {
+	e.preventDefault();
+	setTimeout(() => history.push("/"), 2000)
+};
 
 	return (
 	<>
@@ -41,32 +47,32 @@ useEffect (() => { register(defaultValues);
       <article className="card-body">
 			<header className="mb-4"><h4 className="card-title">Sign up</h4></header>
 			{/* feedback et message d'erreurs */}
- 			<form name="register" onSubmit={() => null}>
+ 			<form name="register" onSubmit={handleOnSubmit}>
 				<div className="form-row">
-					<Input.Text label="First Name" name='first' onChange={() => null} />
-					<Input.Text label="Label Name" name='last'  onChange={() => null} /> 
+					<Input.Text label="First Name" name='first' value={first} onChange={handleOnChange} />
+					<Input.Text label="Label Name" name='last' value={last}  onChange={handleOnChange} /> 
 				</div> 
 				<div className="form-group">
-					<Input.Email label="Email" style={{padding: 0}} onChange={() => null}/>
+					<Input.Email label="Email" value={email} style={{padding: 0}} onChange={handleOnChange}/>
 				</div> 
 				<div className="form-group">
-					<Input.Radio name="gender" label="Male" onChange={() => null} />
-					<Input.Radio name="gender" label="Female" onChange={() => null} />
+					<Input.Radio name="gender" label="Male" value={gender} onChange={handleOnChange} />
+					<Input.Radio name="gender" label="Female" value={gender} onChange={handleOnChange} />
 				</div> 
 				<div className="form-row">
-					<Input.Text name='city' label="City" onChange={() => null} col="6"  />
-					<Input.Select name='country' options={options} label="Country" col="6" onChange={() => null}/>
+					<Input.Text name='city' label="City" value={city} onChange={handleOnChange} col="6"  />
+					<Input.Select name='country' options={options} value={country} label="Country" col="6" onChange={handleOnChange}/>
 				</div> 	
 				
 				<div className="form-row">	
-					<Input.Password label="Create password"  style={{padding: 0}} col="6" onChange={() => null} />
-					<Input.ConfirmPassword label="Repeat password" style={{padding: 0}} col="6" onChange={() => null} />
+					<Input.Password label="Create password" value={password} style={{padding: 0}} col="6" onChange={handleOnChange} />
+					<Input.ConfirmPassword label="Repeat password" value={confirm_password} style={{padding: 0}} col="6" onChange={handleOnChange} />
 				</div>
 				<div className="form-group">
 					<Input.Submit 
 					classNames="btn-primary btn-block" 
 					title="Register"
-					disable="false" 
+					disable={!isValid} 
 					/> 
 			    </div>              
 			</form>

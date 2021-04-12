@@ -3,7 +3,7 @@ import React from 'react';
 const FormContext = React.createContext()
 
 let context;
-export const useFormValidation = ({ formName, defaultValues }) => { 
+export const useFormValidation = ({ formName, defaultValues = {} }) => { 
     const [formValues, setFormValues] = React.useState({})
     const [errors, setErrors] = React.useState({})
     const [isDirty, setDirty] = React.useState(false)
