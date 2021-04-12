@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import * as Input from '../Input'
 import {useFormValidation } from "../../../lib/hooks/useFormValidation"
+import useAuthentication from "../../../lib/hooks/useAuthentication"
+import { useDispatch } from "react-redux"
 
 const Alert = ({ isVisible }) => (
 	isVisible &&
@@ -22,13 +24,16 @@ const defaultValues = {
 	email: 'crochetrobin@gmail.com' ,
 	gender: 'Male' ,
 	city: 'Velaux' ,
-	password: '12345' ,
-	confirm_password: '12345' 
+	password: '123456' ,
+	confirm_password: '123456' 
 }
 const options = ['France', 'Russie', 'United Kingdom', 'United States', 'Allemagne']
-const Register = ({history}) => { 
-const {formValues, validate, register, handleOnChange, isValid} = useFormValidation({formName:'register'});
-const {first,last, email, city, country, gender, password, confirm_password} = formValues['register'] ?? {};
+
+const Register = ({history}) => {
+	const dispatch = useDispatch();
+	const  {handleUserRegistration} = useAuthentication(dispatch);
+	const {formValues, validate, register, handleOnChange, isValid} = useFormValidation({formName:'register'});
+	const {first,last, email, city, country, gender, password, confirm_password} = formValues['register'] ?? {};
 
 
 useEffect (() => { register(defaultValues);
@@ -38,7 +43,20 @@ useEffect (() => { validate(formValues['register'] ?? {});
 
 const handleOnSubmit =(e) => {
 	e.preventDefault();
-	setTimeout(() => history.push("/"), 2000)
+	const newUser = {
+		first,
+		last,
+		email,
+		city,
+		country,
+		gender,
+		password,
+		confirm_password,
+	};
+	handleUserRegistration(newUser).then(() => {
+		console.log('user successfully register')
+		setTimeout(() => history.push("/"), 2000);
+	});
 };
 
 	return (
