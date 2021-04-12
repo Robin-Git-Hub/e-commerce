@@ -1,5 +1,6 @@
 import React from 'react';
-import {removeFromCart} from "../../lib/state/actions" 
+import { useSelector} from "react-redux"
+import { removeFromCart } from "../../lib/state/actions" 
 
 
 const Row = ({ id, name, price, quantity}) => { 
@@ -25,7 +26,7 @@ const Row = ({ id, name, price, quantity}) => {
             </td>
             <td>    
                 <div className="price-wrap"> 
-                    <var className="price">$0.00</var> 
+                    <span className="price">${price*quantity}</span> 
                 </div>
             </td>
             <td className="text-right"> 
