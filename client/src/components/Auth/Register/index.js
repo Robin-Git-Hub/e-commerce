@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from "react-router-dom";
 import * as Input from '../Input'
+import { use, useFormValidation } from "../../../lib/hooks/useFormValidation"
 
 const Alert = ({ isVisible }) => (
 	isVisible &&
@@ -26,6 +27,14 @@ const defaultValues = {
 }
 const options = ['France', 'Russie', 'United Kingdom', 'United States', 'Allemagne']
 const Register = () => { 
+const {formValues, validate, register, handleOnChange} = useFormValidation({formName:'register', defaultValues: defaultValues});
+const {first,last, email, city, country, gender, password, confirm_password} = formValues['register'] ?? {}
+
+
+useEffect (() => { register(defaultValues);
+},[]);
+
+
 	return (
 	<>
     <div className="card mx-auto" style={{maxWidth:'520px', marginTop:'140px'}} >
@@ -54,7 +63,11 @@ const Register = () => {
 					<Input.ConfirmPassword label="Repeat password" style={{padding: 0}} col="6" onChange={() => null} />
 				</div>
 				<div className="form-group">
-					<Input.Submit classNamees="btn-primary btn-block" title="Register" /> 
+					<Input.Submit 
+					classNames="btn-primary btn-block" 
+					title="Register"
+					disable="false" 
+					/> 
 			    </div>              
 			</form>
 		</article>

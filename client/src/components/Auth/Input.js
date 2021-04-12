@@ -38,4 +38,4 @@ export const Email = props =>
 </Text>
 export const Password = props => <div className={`form-group col-md-${props.col}`}><Text name='password' type="password" {...props} onBlur={props.onChange}/></div>
 export const ConfirmPassword = props => <div className={`form-group col-md-${props.col}`}><Text name='confirm_password' type="password" {...props} onBlur={props.onChange}/></div>
-export const Submit = props => <button type="submit" className={`btn ${props.classNamees}`} disabled={props.disabled}>{props.title}</button>
+export const Submit = props => <button type="submit" className={`btn ${props.classNames}`} disabled={props.disabled}>{props.title}</button>
