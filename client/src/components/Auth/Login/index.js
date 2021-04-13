@@ -42,10 +42,10 @@ const Login = ({history}) => {
 
   const handleOnSubmit =(e) => {
     e.preventDefault();
-    handleUserLogin(email, password).then((currentUser) => 
-      console.log(currentUser)
-      );
-  //   setTimeout(() => history.push("/"), 2000);
+    handleUserLogin(email, password).then(
+      (currentUser) => {
+       currentUser && setTimeout(() => history.push("/"), 2000);
+    })
   };
 
   return(<>

@@ -1,19 +1,28 @@
-import React from 'react';  
+import React, { useEffect } from 'react';  
 import { Route } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import Home from './Home'
-import About from './Misc/About'
-import Help from './Misc/Help'
-import Deals from './Misc/Deals'
-import Login from './Auth/Login'
-import Register from './Auth/Register'
-import Checkout from './Checkout'
-import Success from './Checkout/Success'
-import Cancel from './Checkout/Cancel'
-import Cart from './Cart'
-import Layout from './Layout'
+import useAuthentication from "../lib/hooks/useAuthentication";
+import Home from './Home';
+import About from './Misc/About';
+import Help from './Misc/Help';
+import Deals from './Misc/Deals';
+import Login from './Auth/Login';
+import Register from './Auth/Register';
+import Checkout from './Checkout';
+import Success from './Checkout/Success';
+import Cancel from './Checkout/Cancel';
+import Cart from './Cart';
+import Layout from './Layout';
 
 const App = () => {
+
+  const dispatch = useDispatch();
+  const { handleAuthentication } = useAuthentication(dispatch);
+
+  useEffect(() => {
+  handleAuthentication();
+  }, [])
+
   return (
       <Layout>
         <Route exact path="/" component={Home} />
