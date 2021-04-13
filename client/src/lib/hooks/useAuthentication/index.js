@@ -13,7 +13,7 @@ const useAuthentication = (dispatch) => {
                     newUser.password
                 );
                  app.logIn(credentials).then((user) => {
-                    dispatch(handleLogin(user));
+                    dispatch(handleLogin(newUser));
                     resolve(user);  
                  });
             })
