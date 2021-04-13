@@ -27,6 +27,7 @@
   },
   "scripts": {
     "dev": "concurrently \"cd ../backend && npm start\" \"npm start\"",
+    "compile": "yarn install && cd .. && cd backend && yarn install && cd .. && cd client && npm run dev",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
