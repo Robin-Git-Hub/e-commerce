@@ -1,5 +1,6 @@
 import * as Realm from "realm-web";
 import { app }from '../../service/mongoDB-sdk'
+import { handleLogin, handleLogout, handleAuthErrors } from '../../state/actions/authentication'
 
 const useAuthentication = (dispatch) => {
     function handleUserRegistration(newUser) {
@@ -11,9 +12,12 @@ const useAuthentication = (dispatch) => {
                     newUser.email,
                     newUser.password
                 );
-                resolve();
-                 app.logIn(credentials).then((user) => console.log(user));
-            });
+                 app.logIn(credentials).then((user) => {
+                    dispatch(handleLogin(user));
+                    resolve(user);  
+                 });
+            })
+            .catch((err) => dispatch(handleAuthErrors(err)));
         });
     }
     return {

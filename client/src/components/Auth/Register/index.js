@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import * as Input from '../Input'
 import {useFormValidation } from "../../../lib/hooks/useFormValidation"
 import useAuthentication from "../../../lib/hooks/useAuthentication"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 
 const Alert = ({ isVisible }) => (
 	isVisible &&
@@ -14,7 +14,7 @@ const Alert = ({ isVisible }) => (
 const ErrorMessage = ({ error }) => (
 	error && 
 	<div className="alert alert-danger mt-3">
-		<p className="icontext]" style={{ color: 'crimson' }}><i className="icon text-danger fas fa-exclamation-circle"></i> {' '}{error?.error}</p>
+		<p className="icontext]" style={{ color: 'crimson' }}><i className="icon text-danger fas fa-exclamation-circle"></i> {' '}{error?.error} or email</p>
     </div>
 )
 
@@ -30,6 +30,7 @@ const defaultValues = {
 const options = ['France', 'Russie', 'United Kingdom', 'United States', 'Allemagne']
 
 const Register = ({history}) => {
+	const { user, error }= useSelector(state => state.user);
 	const dispatch = useDispatch();
 	const  {handleUserRegistration} = useAuthentication(dispatch);
 	const {formValues, validate, register, handleOnChange, isValid} = useFormValidation({formName:'register'});
@@ -41,7 +42,7 @@ useEffect (() => { register(defaultValues);
 useEffect (() => { validate(formValues['register'] ?? {});
 },[formValues]);
 
-const handleOnSubmit =(e) => {
+const handleOnSubmit = (e) => {
 	e.preventDefault();
 	const newUser = {
 		first,
@@ -53,9 +54,9 @@ const handleOnSubmit =(e) => {
 		password,
 		confirm_password,
 	};
-	handleUserRegistration(newUser).then(() => {
+	handleUserRegistration(newUser).then((user) => {
 		console.log('user successfully register')
-		setTimeout(() => history.push("/"), 2000);
+		user && setTimeout(() => history.push("/"), 2000);
 	});
 };
 
@@ -65,6 +66,8 @@ const handleOnSubmit =(e) => {
       <article className="card-body">
 			<header className="mb-4"><h4 className="card-title">Sign up</h4></header>
 			{/* feedback et message d'erreurs */}
+			<ErrorMessage error={error} />
+			<Alert isVisible={!!user}/>
  			<form name="register" onSubmit={handleOnSubmit}>
 				<div className="form-row">
 					<Input.Text label="First Name" name='first' value={first} onChange={handleOnChange} />
