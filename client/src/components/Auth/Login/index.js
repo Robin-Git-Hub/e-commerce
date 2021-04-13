@@ -2,6 +2,8 @@ import React, {useEffect} from 'react'
 import { Link } from "react-router-dom";
 import * as Input from '../Input'
 import { useFormValidation } from "../../../lib/hooks/useFormValidation"
+import useAuthentication from "../../../lib/hooks/useAuthentication"
+import { useDispatch, useSelector } from "react-redux"
 
 const Alert = ({ isVisible }) => (
 	isVisible &&
@@ -23,6 +25,12 @@ const defaultValues = {
 
 const Login = ({history}) => { 
 
+  const dispatch = useDispatch();
+
+  const { user, error } = useSelector((state) => state.user);
+
+  const { handleUserLogin } = useAuthentication(dispatch);
+
   const {formValues, validate, register, handleOnChange, isValid} = useFormValidation({formName:'login', defaulValues: defaultValues});
 
   const {email, password} = formValues['login'] ?? {};
@@ -34,14 +42,18 @@ const Login = ({history}) => {
 
   const handleOnSubmit =(e) => {
     e.preventDefault();
-    setTimeout(() => history.push("/"), 2000);
+    handleUserLogin(email, password).then((currentUser) => 
+      console.log(currentUser)
+      );
+  //   setTimeout(() => history.push("/"), 2000);
   };
 
   return(<>
 		<div className="card mx-auto" style={{maxWidth: '380px', marginTop:'200px'}}>
       <div className="card-body">
         <h4 className="card-title mb-4">Sign in</h4>
-        {/* feedback et message d'erreurs */}
+        <ErrorMessage error={error} />
+        <Alert isVisible={!!user} />
        	<form name="login" onSubmit={handleOnSubmit}>
           {/* 
           <a href="#" className="btn btn-facebook btn-block mb-2"> <i className="fab fa-facebook-f"></i> &nbsp  Sign in with Facebook</a>
