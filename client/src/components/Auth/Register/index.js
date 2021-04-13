@@ -65,7 +65,6 @@ const handleOnSubmit = (e) => {
     <div className="card mx-auto" style={{maxWidth:'520px', marginTop:'140px'}} >
       <article className="card-body">
 			<header className="mb-4"><h4 className="card-title">Sign up</h4></header>
-			{/* feedback et message d'erreurs */}
 			<ErrorMessage error={error} />
 			<Alert isVisible={!!user}/>
  			<form name="register" onSubmit={handleOnSubmit}>
