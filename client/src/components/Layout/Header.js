@@ -1,15 +1,23 @@
 import React from 'react';
 import {useSelector} from 'react-redux'  
 import { Link } from "react-router-dom";
+import useAuthentication from "../../lib/hooks/useAuthentication"
 
-const UserLogin = ({ user  }) => { 
+const UserLogin = ({ user  }) => {
+
+	const { handleUserLogout } = useAuthentication();
+
+	const logout = () => {
+		handleUserLogout()
+		setTimeout(() => window.location.reload(), 1000);
+	}
 	return (
 		<>
 			<li><span className="nav-link">
 				{!!user ?
 					<>
-						<button className="btn btn-danger btn-sm" onClick={() => null}>logout</button>{" "}
-						<span><b>Hi,{ user?.first }</b></span>
+						<button className="btn btn-danger btn-sm" onClick={logout}>logout</button>{" "}
+						<span><b>Salut,{ user?.first }</b></span>
 					</> :
 					<span>
 						<Link to={'/login'}>login</Link> or <Link to={'/register'}>register</Link>

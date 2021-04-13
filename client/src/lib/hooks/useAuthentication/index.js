@@ -20,8 +20,18 @@ const useAuthentication = (dispatch) => {
             .catch((err) => dispatch(handleAuthErrors(err)));
         });
     }
+
+    async function handleUserLogout () {
+        console.dir(app.currentUser);
+        app.currentUser?.logOut()
+        .then(() => console.log("user successfully log out"))
+        .catch((err) => console.log(err));
+    }
+
+
     return {
         handleUserRegistration,
+        handleUserLogout
     };
 };
 export default useAuthentication;
