@@ -19,7 +19,7 @@ routes.use(cors());
 // mongoDB client
 const MongoClient = require("mongodb").MongoClient;
 const uri =
-  "mongodb+srv://usertest:test123@cluster-clickcollect.j9nty.mongodb.net/marketplace?retryWrites=true&w=majority";
+  "mongodb+srv://robin:241190@marketplaceproject.9dy5z.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -107,25 +107,20 @@ client.connect((err) => {
 });
 
 //stripe
-const stripe = require("stripe")(process.env.SECRET_KEY);
+const stripe = require('stripe')('sk_test_51Ig7X1HoFREscj396x4na3OLteEoDR9dRu40eNGj1uYgspLiYUgntiq2kJTr1veENe6KPLJWImERAc8zZ14Oclsy00ipkXWqiA');
 const YOUR_DOMAIN = "http://localhost:3000";
 
-routes.post("/create-checkout-session", jsonParser, async (req, res) => {
-  try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: req.body,
-      mode: "payment",
-      success_url: `${YOUR_DOMAIN}/success`,
-      cancel_url: `${YOUR_DOMAIN}/cancel`,
-    });
-
-    res.json({ id: session.id });
-    console.log("Successfull post Stripe")
-  } catch (err) {
-    return res.status(500).send(`failed to process payment ${err}`);
-  }
+routes.post('/create-checkout-session', async (req, res) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: req.body,
+    mode: 'payment', 
+    success_url: `${YOUR_DOMAIN}`,
+    cancel_url: `${YOUR_DOMAIN}`,
+  });
+  res.json({ id: session.id });
 });
+app.listen(4242, () => console.log('Running on port 4242'));
 
 //routes
 routes.get("/", (req, res) => {

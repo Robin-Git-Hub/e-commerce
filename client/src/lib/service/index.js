@@ -1,4 +1,5 @@
 import axios from "axios";
+import {loadStripe} from '@stripe/stripe-js'
 
 // GET
 export const getProducts = () => {
@@ -48,3 +49,15 @@ export const addUser = (body) => {
       .catch((err) => onFail(err));
   });
 };
+
+//Stripe
+
+export const processPayment = async (order) => {
+  var stripePromise = loadStripe("pk_test_51Ig7X1HoFREscj39cocpLby78kAIGaZCMSg87LseWP7JyeqvOQ19CG4oC7pYQbNm0uvRFQU811Rel104QQQZtJzn00wppsy5Kg");
+  const stripe = await stripePromise;
+  axios.post('api/create-checkout-session', order)
+  .then (response => {
+    const sessionID = response.data.id
+    return stripe.redirectToCheckout({ sessionId: sessionID });
+  })
+}
