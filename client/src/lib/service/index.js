@@ -36,6 +36,7 @@ export const getUser = (body) => {
 };
 
 // POST
+
 export const addUser = (body) => {
   return new Promise((onSuccess, onFail) => {
     axios
@@ -50,7 +51,7 @@ export const addUser = (body) => {
   });
 };
 
-//Stripe
+// Stripe
 
 export const processPayment = async (order) => {
   var stripePromise = loadStripe("pk_test_51Ig7X1HoFREscj39cocpLby78kAIGaZCMSg87LseWP7JyeqvOQ19CG4oC7pYQbNm0uvRFQU811Rel104QQQZtJzn00wppsy5Kg");

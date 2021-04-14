@@ -1,8 +1,22 @@
 
 import React from 'react'
+import { useSelector } from "react-redux"
 import {processPayment} from '../../lib/service';
 
 function Payment({ isValid }) {
-  return (<button className="btn btn-outline-primary btn-lg mt-3 btn-block" onClick={() => processPayment({})} disabled={isValid}>Checkout</button>);
+
+const {items} = useSelector(state => state.cart);
+const processItem = item => ({
+  price_data: {
+    currency : 'usd',
+    product_data: {name: item.name},
+    unit_amount : item.price *100, 
+  },
+  quantity : item.quantity,
+});
+
+const order = items.map(processItem);
+
+  return (<button className="btn btn-outline-primary btn-lg mt-3 btn-block" onClick={() => processPayment(order)} disabled={isValid}>Checkout</button>);
 }
 export default Payment;
