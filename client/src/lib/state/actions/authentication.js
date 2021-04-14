@@ -1,13 +1,12 @@
-import { handleAuthRedirect } from 'realm-web'
 import {
     LOGIN,
     LOGOUT
 } from './actionTypes'
 
-export const handleAuthErrors = (err) => {
+export const handleAuthenticationErrors = (err) => {
     return {
         type: LOGIN,
-        payload: { user:null, error: err},
+        payload: { user:null, error: null },
     };
 };
 
