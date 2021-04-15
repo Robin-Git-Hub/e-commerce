@@ -115,7 +115,7 @@ routes.post('/create-checkout-session', async (req, res) => {
     payment_method_types: ['card'],
     line_items: req.body,
     mode: 'payment', 
-    success_url: `${YOUR_DOMAIN}`,
+    success_url: `${YOUR_DOMAIN}/success`,
     cancel_url: `${YOUR_DOMAIN}`,
   });
   res.json({ id: session.id });
