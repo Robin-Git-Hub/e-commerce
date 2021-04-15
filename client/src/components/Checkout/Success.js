@@ -7,7 +7,18 @@ const styles = {
   height: '100vh',
   fontSize: 20
 }
+
 function Success({ history }) {
+  useEffect(() => {
+    redirectHome()
+  }, [])
+
+    const redirectHome = () => {
+      setTimeout(() => {
+        history.push("/")
+      }, 4000);
+  };
+
   return (
     <>
     <div style={styles} className='d-flex justify-content-center align-items-center'>
